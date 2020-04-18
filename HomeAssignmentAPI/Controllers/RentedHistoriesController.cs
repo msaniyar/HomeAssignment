@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HomeAssignmentAPI.Data;
+using HomeAssignmentAPI.Interfaces;
 using HomeAssignmentAPI.Models;
 
 namespace HomeAssignmentAPI.Controllers
@@ -16,9 +17,12 @@ namespace HomeAssignmentAPI.Controllers
     {
         private readonly HomeAssignmentAPIContext _context;
 
-        public RentedHistoriesController(HomeAssignmentAPIContext context)
+        private readonly IBackendServices _backendServices;
+
+        public RentedHistoriesController(HomeAssignmentAPIContext context, IBackendServices backendServices)
         {
             _context = context;
+            _backendServices = backendServices;
         }
 
         // GET: api/RentedHistories
@@ -28,51 +32,15 @@ namespace HomeAssignmentAPI.Controllers
             return await _context.RentedHistory.ToListAsync();
         }
 
-        // GET: api/RentedHistories/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<RentedHistory>> GetRentedHistory(int id)
+        // GET: api/RentedHistories
+        [HttpGet]
+        [Route("getinvoice")]
+        public async Task<ActionResult<IEnumerable<RentedHistory>>> GetInvoice(string userName)
         {
-            var rentedHistory = await _context.RentedHistory.FindAsync(id);
-
-            if (rentedHistory == null)
-            {
-                return NotFound();
-            }
-
-            return rentedHistory;
+            return await _backendServices.GetInvoice(userName).ToListAsync();
         }
 
-        // PUT: api/RentedHistories/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutRentedHistory(int id, RentedHistory rentedHistory)
-        {
-            if (id != rentedHistory.Name)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(rentedHistory).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RentedHistoryExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
+        
 
         // POST: api/RentedHistories
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
@@ -86,25 +54,5 @@ namespace HomeAssignmentAPI.Controllers
             return CreatedAtAction("GetRentedHistory", new { id = rentedHistory.Name }, rentedHistory);
         }
 
-        // DELETE: api/RentedHistories/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<RentedHistory>> DeleteRentedHistory(int id)
-        {
-            var rentedHistory = await _context.RentedHistory.FindAsync(id);
-            if (rentedHistory == null)
-            {
-                return NotFound();
-            }
-
-            _context.RentedHistory.Remove(rentedHistory);
-            await _context.SaveChangesAsync();
-
-            return rentedHistory;
-        }
-
-        private bool RentedHistoryExists(int id)
-        {
-            return _context.RentedHistory.Any(e => e.Name == id);
-        }
     }
 }

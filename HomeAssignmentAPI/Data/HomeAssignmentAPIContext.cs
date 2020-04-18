@@ -17,5 +17,22 @@ namespace HomeAssignmentAPI.Data
         public DbSet<HomeAssignmentAPI.Models.EquipmentList> EquipmentList { get; set; }
 
         public DbSet<HomeAssignmentAPI.Models.RentedHistory> RentedHistory { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+            modelBuilder.Entity<EquipmentList>().HasData(
+                new EquipmentList[]
+                {
+                    new EquipmentList() { Name = "Caterpillar bulldozer", EquipmentType = "Heavy" },
+                    new EquipmentList() { Name = "KamAZ truck", EquipmentType = "Regular" },
+                    new EquipmentList() { Name = "Komatsu crane", EquipmentType = "Heavy" },
+                    new EquipmentList() { Name = "Volvo steamroller", EquipmentType = "Regular" },
+                    new EquipmentList() { Name = "Bosch jackhammer", EquipmentType = "Specialized" }
+                }
+            );
+
+
+        }
     }
 }

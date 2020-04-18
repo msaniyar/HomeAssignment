@@ -11,6 +11,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using HomeAssignmentAPI.Data;
+using HomeAssignmentAPI.Interfaces;
+using HomeAssignmentAPI.Services;
 
 namespace HomeAssignmentAPI
 {
@@ -26,10 +28,16 @@ namespace HomeAssignmentAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+
+            services.AddScoped<IBackendServices, BackendServices>();
 
             services.AddDbContext<HomeAssignmentAPIContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("HomeAssignmentAPIContext")));
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

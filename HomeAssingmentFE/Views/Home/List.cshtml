@@ -1,0 +1,61 @@
+﻿@model IEnumerable<HomeAssingmentFE.Models.ListModel>
+@{
+    var newModel = new RentModel();
+}
+
+@{
+    ViewData["Title"] = "List of Equipments";
+}
+
+<h1>Please select Equipment, set the days and add to chart.</h1>
+<td>@ViewBag.Message</td>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EquipmentType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RentedDays)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            @using (Html.BeginForm("List", "Home", FormMethod.Post))
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EquipmentType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+
+                        @{
+                            var equipmentType = item.EquipmentType;
+                            var name = item.Name;
+                            var rentedDays = item.RentedDays;
+                        }
+                        @Html.HiddenFor(modelItem => equipmentType)
+                        @Html.HiddenFor(modelItem => name)
+                        @Html.EditorFor(modelItem => rentedDays)
+                    <td>
+                        <input type="submit" value="Add to Chart" />
+                    </td>
+
+
+                </tr>
+            }
+        }
+    </tbody>
+
+</table>
