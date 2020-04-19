@@ -8,7 +8,7 @@ Frontend solution is ASP.NET Core MVC.
 Tests are developed by NUnit Framework.
 
 To start application first build HomeAssignmentAPI project then run following command from Package Manager Console.
-Default project should be HomeAssignmentAPI for package manager console.
+Default project and Startup project should be HomeAssignmentAPI for package manager console.
 
 update-database
 
