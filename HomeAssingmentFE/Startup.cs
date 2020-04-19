@@ -60,10 +60,10 @@ namespace HomeAssingmentFE
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            app.UseRequestLocalization(new RequestLocalizationOptions
-            {
-                DefaultRequestCulture = new RequestCulture("en-US")
-            });
+            //app.UseRequestLocalization(new RequestLocalizationOptions
+            //{
+            //    DefaultRequestCulture = new RequestCulture("en-US")
+            //});
         }
     }
 }
