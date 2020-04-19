@@ -10,7 +10,7 @@ using HomeAssignmentAPI.Models;
 
 namespace HomeAssignmentAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class EquipmentListsController : ControllerBase
     {
@@ -21,7 +21,7 @@ namespace HomeAssignmentAPI.Controllers
             _context = context;
         }
 
-        // GET: api/EquipmentLists
+        // GET: EquipmentLists
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EquipmentList>>> GetEquipmentList()
         {

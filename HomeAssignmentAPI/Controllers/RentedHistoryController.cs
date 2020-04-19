@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,40 +12,39 @@ using HomeAssignmentAPI.Models;
 
 namespace HomeAssignmentAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
-    public class RentedHistoriesController : ControllerBase
+    public class RentedHistoryController : ControllerBase
     {
         private readonly HomeAssignmentAPIContext _context;
 
         private readonly IBackendServices _backendServices;
 
-        public RentedHistoriesController(HomeAssignmentAPIContext context, IBackendServices backendServices)
+        public RentedHistoryController(HomeAssignmentAPIContext context, IBackendServices backendServices)
         {
             _context = context;
             _backendServices = backendServices;
         }
 
-        // GET: api/RentedHistories
+        // GET: RentedHistory
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<RentedHistory>>> GetRentedHistory()
+        public async Task<ActionResult<IEnumerable<RentedHistory>>> GetRentedHistory(string userName)
         {
-            return await _context.RentedHistory.ToListAsync();
+            return await _context.RentedHistory.Where(a => a.UserName == userName).ToListAsync();
         }
 
-        // GET: api/RentedHistories
+        // GET: RentedHistories?username
         [HttpGet]
         [Route("getinvoice")]
-        public async Task<ActionResult<IEnumerable<RentedHistory>>> GetInvoice(string userName)
+        public ActionResult GetInvoice(string userName)
         {
-            return await _backendServices.GetInvoice(userName).ToListAsync();
+            var result = _backendServices.GetInvoice(userName);
+            return !string.IsNullOrEmpty(result) ? (ActionResult) Ok(result) : NoContent();
         }
 
         
 
-        // POST: api/RentedHistories
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
+        // POST: RentedHistory
         [HttpPost]
         public async Task<ActionResult<RentedHistory>> PostRentedHistory(RentedHistory rentedHistory)
         {

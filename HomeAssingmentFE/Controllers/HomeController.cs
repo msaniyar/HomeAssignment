@@ -15,12 +15,10 @@ namespace HomeAssingmentFE.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IFrontEndServices _services;
 
         public HomeController(ILogger<HomeController> logger, IFrontEndServices services)
         {
             _logger = logger;
-            _services = services;
         }
 
         public IActionResult Index()
@@ -28,28 +26,6 @@ namespace HomeAssingmentFE.Controllers
             return View();
         }
 
-
-        public async Task<IActionResult> List()
-        {
-            var list = await _services.GetEquipmentList();
-            if (TempData["ViewMessage"] != null)
-                ViewBag.Message = TempData["ViewMessage"].ToString();
-            return View(list);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> List(RentModel model )
-        {
-            model.UserName = "MyUser";
-            model.Id = new Guid();
-            TempData["ViewMessage"] = await _services.AddNewRent(model);
-            return RedirectToAction(nameof(List));
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

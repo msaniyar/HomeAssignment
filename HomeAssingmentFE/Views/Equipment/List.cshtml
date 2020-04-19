@@ -1,26 +1,35 @@
-﻿@model IEnumerable<HomeAssingmentFE.Models.ListModel>
-@{
-    var newModel = new RentModel();
-}
+﻿@using HomeAssingmentFE.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Mvc.Rendering
+@inject IViewLocalizer Localizer
+@model IEnumerable<HomeAssingmentFE.Models.ListModel>
 
 @{
-    ViewData["Title"] = "List of Equipments";
+    ViewData["Title"] = Localizer["List of Equipments"];
 }
 
-<h1>Please select Equipment, set the days and add to chart.</h1>
+<h1>@Localizer["Equipment List Title"]</h1>
+
+<td>@{
+        if (ViewData["ResultMessage"] != null)
+        {
+            ViewBag.Message = Localizer[(string) ViewData["ResultMessage"]];
+        }
+    }</td>
+
 <td>@ViewBag.Message</td>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.EquipmentType)
+                @Html.DisplayName(Localizer["Equipment Type"].Value)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayName(Localizer["Equipment Name"].Value)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RentedDays)
+                @Html.DisplayName(Localizer["Days for Rent"].Value)
             </th>
             <th></th>
         </tr>
@@ -29,17 +38,19 @@
 
         @foreach (var item in Model)
         {
-            @using (Html.BeginForm("List", "Home", FormMethod.Post))
+            @using (Html.BeginForm("List", "Equipment", FormMethod.Post))
             {
                 <tr>
+
                     <td>
                         @Html.DisplayFor(modelItem => item.EquipmentType)
                     </td>
+
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
-                    <td>
 
+                    <td>
                         @{
                             var equipmentType = item.EquipmentType;
                             var name = item.Name;
@@ -47,7 +58,7 @@
                         }
                         @Html.HiddenFor(modelItem => equipmentType)
                         @Html.HiddenFor(modelItem => name)
-                        @Html.EditorFor(modelItem => rentedDays)
+                        @Html.EditorFor(modelItem => rentedDays , new { htmlAttributes = new { @min = "1"} })
                     <td>
                         <input type="submit" value="Add to Chart" />
                     </td>

@@ -1,0 +1,70 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Mvc.Rendering
+@inject IViewLocalizer Localizer
+@model IEnumerable<HomeAssingmentFE.Models.RentModel>
+@{
+    ViewData["Title"] = Localizer["Rent History"];
+}
+
+<h1>@Localizer["Your Rent History"]</h1>
+
+<td>@{ if(ViewBag.Message != null)
+       {
+           ViewBag.Message = Localizer[ViewBag.Message];
+       }
+    }
+<td>@ViewBag.Message</td>
+
+<br/>
+
+<table class="table-responsive">
+    <thead>
+    <tr>
+        <th>
+            @Html.ActionLink(Localizer["GenerateInvoice"].Value, "GenerateInvoice")
+        </th>
+    </tr>
+    </thead>
+
+</table>
+
+<br />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayName(Localizer["User Name"].Value)
+            </th>
+            <th>
+                @Html.DisplayName(Localizer["Equipment Name"].Value)
+            </th>
+            <th>
+                @Html.DisplayName(Localizer["Days for Rent"].Value)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RentedDays)
+                </td>
+            </tr>
+
+        }
+
+    
+
+     
+
+    </tbody>
+</table>

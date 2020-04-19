@@ -19,16 +19,6 @@ namespace HomeAssignmentAPI.Models
 
         public virtual EquipmentList EquipmentList { get; set; }
 
-        [NotMapped]
-        public InvoiceModel InvoiceModel { get; set; }
     }
 
-    public partial class InvoiceModel
-    {
-        public string Title { get; set; }
-
-        public int TotalPrice { get; set; }
-
-        public int TotalBonus { get; set; }
-    }
 }
