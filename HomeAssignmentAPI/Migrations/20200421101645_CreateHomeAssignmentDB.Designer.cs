@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HomeAssignmentAPI.Migrations
 {
     [DbContext(typeof(HomeAssignmentAPIContext))]
-    [Migration("20200418150433_CreateHomeAssignmentDB")]
+    [Migration("20200421101645_CreateHomeAssignmentDB")]
     partial class CreateHomeAssignmentDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,7 +42,7 @@ namespace HomeAssignmentAPI.Migrations
                         new
                         {
                             Name = "KamAZ truck",
-                            EquipmentType = "Reqular"
+                            EquipmentType = "Regular"
                         },
                         new
                         {

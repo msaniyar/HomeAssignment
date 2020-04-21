@@ -45,7 +45,7 @@ namespace HomeAssignmentAPI.Migrations
                 values: new object[,]
                 {
                     { "Caterpillar bulldozer", "Heavy" },
-                    { "KamAZ truck", "Reqular" },
+                    { "KamAZ truck", "Regular" },
                     { "Komatsu crane", "Heavy" },
                     { "Volvo steamroller", "Regular" },
                     { "Bosch jackhammer", "Specialized" }

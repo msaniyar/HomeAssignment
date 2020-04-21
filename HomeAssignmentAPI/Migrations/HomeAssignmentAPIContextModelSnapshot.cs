@@ -40,7 +40,7 @@ namespace HomeAssignmentAPI.Migrations
                         new
                         {
                             Name = "KamAZ truck",
-                            EquipmentType = "Reqular"
+                            EquipmentType = "Regular"
                         },
                         new
                         {
